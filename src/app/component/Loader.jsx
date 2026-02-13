@@ -20,7 +20,7 @@ export default function Loader({ fadeOut }) {
       </div>
 
       {/* Text */}
-      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-black font-extrabold tracking-wider mb-2">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white font-extrabold tracking-wider mb-2">
         ELON COIN
       </h1>
 
@@ -30,8 +30,8 @@ export default function Loader({ fadeOut }) {
 
       {/* Loading bar */}
       <div className="w-40 sm:w-48 md:w-56 lg:w-64 h-1 bg-gray-700 rounded overflow-hidden">
-        <div className="h-full w-full bg-green-400 animate-loading" />
+        <div className="h-full  bg-green-400 animate-loading myLoader" />
       </div>
-    </section>
+  </section>
   );
 }

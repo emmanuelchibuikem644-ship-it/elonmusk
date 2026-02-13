@@ -24,3 +24,20 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.myLoader {
+  width: 0%;
+  height: 100%;
+  background-color: #22c55e; /* green */
+  animation: readmyLoader 3s linear forwards;
+}
+
+@keyframes readmyLoader {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}

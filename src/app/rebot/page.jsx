@@ -10,7 +10,7 @@ export default function rebot() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // ⏱️ loader duration
+    }, 200); // ⏱️ loaderdration
 
     return () => clearTimeout(timer);
   }, []);
