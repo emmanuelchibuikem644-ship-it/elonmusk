@@ -1,5 +1,4 @@
  "use client";
-
 import { useEffect, useState } from "react"; // ✅ ADDED
 import Link from "next/link";
 import { WalletCards } from "lucide-react";
