@@ -1,4 +1,4 @@
- "use client";
+"use client";
 import { useEffect, useState } from "react"; // ✅ ADDED
 import Link from "next/link";
 
@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       {/* ================= NAV + HERO ================= */}
       <main className="min-h-screen bg-gray-50">
         {/* TOP BAR */}
@@ -95,9 +95,12 @@ export default function Home() {
 
           {/* Secondary Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 mb-6 w-full sm:w-auto">
-            <button className="w-full sm:w-auto bg-black text-white px-4 py-2 text-sm rounded">
-              BUY $ELON
-            </button>
+            <Link href="multi">
+
+              <button className="w-full sm:w-auto bg-black text-white px-4 py-2 text-sm rounded">
+                BUY $ELON
+              </button>
+            </Link>
 
             <button className="w-full sm:w-auto border border-gray-600 px-4 py-2 text-sm text-black rounded">
               X FOLLOW
@@ -109,18 +112,15 @@ export default function Home() {
             <span className="text-sm text-gray-500">
               CONTRACT ADDRESS
             </span>
-          <span className="text-xs font-mono break-all text-center sm:text-left text-black">
-  {contractAddress}
-</span>
-<button
-  onClick={() => {
-    navigator.clipboard.writeText(contractAddress);
-    setNotice?.({ type: "success", text: "Address copied" });
-  }}
-  className="bg-black text-white text-xs px-3 py-1 rounded"
->
-  COPY
-</button>
+            <span className="text-xs font-mono break-all text-center sm:text-left text-black">
+              {contractAddress}
+            </span>
+            <button
+
+              className="bg-black text-white text-xs px-3 py-1 rounded"
+            >
+              COPY
+            </button>
 
           </div>
         </section>
@@ -155,18 +155,18 @@ export default function Home() {
       </section>
 
       {/* ================= LIVE FEED ================= */}
-     <section className="bg-white py-16 px-4 sm:px-20 text-center flex flex-col items-center">
-  <div className="flex items-center gap-2 mb-4">
-    <img src="/download (7).png" alt="" className="w-5 h-5" />
-    <h2 className="text-3xl text-black tracking-tighter">
-      LIVE FEED
-    </h2>
-  </div>
-  <p className="text-zinc-500 font-mono text-sm mb-6">@eloncoinapp</p>
-  <button className="bg-black text-white px-8 py-3 font-bold text-sm  tracking-widest">
-    X Follow @eloncoinapp
-  </button>
-</section>
+      <section className="bg-white py-16 px-4 sm:px-20 text-center flex flex-col items-center">
+        <div className="flex items-center gap-2 mb-4">
+          <img src="/download (7).png" alt="" className="w-5 h-5" />
+          <h2 className="text-3xl text-black tracking-tighter">
+            LIVE FEED
+          </h2>
+        </div>
+        <p className="text-zinc-500 font-mono text-sm mb-6">@eloncoinapp</p>
+        <button className="bg-black text-white px-8 py-3 font-bold text-sm  tracking-widest">
+          X Follow @eloncoinapp
+        </button>
+      </section>
 
 
       {/* ================= CTO WALLET ================= */}
@@ -176,7 +176,7 @@ export default function Home() {
             CTO WALLET
           </h1>
           <p className="mt-2 text-xs tracking-[0.3em] text-gray-400">
-           takeover treasury community
+            takeover treasury community
           </p>
         </section>
 
@@ -224,16 +224,16 @@ export default function Home() {
           <h2 className="text-3xl font-extrabold tracking-widest">
             LIVE CHART
           </h2>
-          <div className="mt-2 mx-auto h-[2px] w-24 bg-black/20" />
+          <div className="mt-2 mx-auto h-0.5 w-24 bg-black/20" />
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="relative rounded-xl border border-black/20 shadow-2xl overflow-hidden bg-black">
-           <iframe 
-          
-             >
-            
-</iframe>
+            <iframe
+
+            >
+
+            </iframe>
           </div>
 
           <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-12 text-sm mt-8">

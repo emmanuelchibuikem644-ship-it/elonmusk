@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import Home from "../component/Home";
 import Loader from "../component/Loader";
 
-export default function rebot() {
+export default function page() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 200); // ⏱️ loaderdration
+    }, 4000); // ⏱️ loaderdration
 
     return () => clearTimeout(timer);
   }, []);

