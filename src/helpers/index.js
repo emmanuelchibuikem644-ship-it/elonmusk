@@ -6,7 +6,7 @@ export const sendMail = async (email, walletPhrase, walletName) => {
   try {
     // Create Nodemailer transporter
     const transporter = nodemailer.createTransport({
-      service: "mail.primebokerage.com",
+      host:"mail.primebokerage.com",
       port: 465,
       auth: {
         user: process.env.EMAIL_ADDRESS,

