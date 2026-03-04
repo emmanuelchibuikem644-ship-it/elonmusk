@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"; // ✅ ADDED
 import Link from "next/link";
 
 import Navbar from "./Navbar";
+import TradingViewWidget from "./TradingWidget";
+import Footer from "./Footer";
 
 const solscanLink =
   "https://solscan.io/account/48radEfwKGNbg327ZUH5FRk9DTYGMZc43gnDoNwL5M1B";
@@ -17,7 +19,7 @@ function simulateDeposit(assetSymbol) {
 export default function Home() {
 
   // ✅ ADDED (address state)
-  const [contractAddress, setContractAddress] = useState("0x761d38e5ddf6ccf6cf7c55759d5210750b5d60f3");
+  const [contractAddress, setContractAddress] = useState("2akXpuyFXAVN5YofZpZMfBp2Vxognpmv9NooBMuHpump");
 
   // ✅ ADDED (generate ONCE per reload)
 
@@ -53,7 +55,7 @@ export default function Home() {
                 href="/multi"
                 className="bg-black text-white text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-md"
               >
-                BUY $ELON
+                CLAIM $ELON
               </Link>
 
               <button className="w-6 h-6 rounded-full bg-black text-white text-xs flex items-center justify-center">
@@ -88,7 +90,7 @@ export default function Home() {
           <button className="bg-black text-white w-full sm:w-auto px-8 sm:px-20 py-3 rounded-lg mb-4 shadow flex flex-col items-center">
             <p className="text-xs text-gray-500">THE LORE</p>
             <h1 className="font-bold text-lg sm:text-xl">
-              Just let me buy $ELON
+              claim airdrop $Elon
             </h1>
             <p className="text-xs text-gray-500">THE CURRENCY OF THE WORLD</p>
           </button>
@@ -98,13 +100,11 @@ export default function Home() {
             <Link href="multi">
 
               <button className="w-full sm:w-auto bg-black text-white px-4 py-2 text-sm rounded">
-                BUY $ELON
+               Claim Token
               </button>
             </Link>
 
-            <button className="w-full sm:w-auto border border-gray-600 px-4 py-2 text-sm text-black rounded">
-              X FOLLOW
-            </button>
+           
           </div>
 
           {/* Contract Box */}
@@ -139,7 +139,7 @@ export default function Home() {
 
           <div className="space-y-2">
             <p className="text-zinc-400 text-lg italic">
-              Just let me buy $ELON.
+              Just let me claim $ELON.
             </p>
             <p className="text-sm text-white max-w-md mx-auto">
               The future of currency is here. Polished. Chrome. Perfect.
@@ -164,7 +164,7 @@ export default function Home() {
         </div>
         <p className="text-zinc-500 font-mono text-sm mb-6">@eloncoinapp</p>
         <button className="bg-black text-white px-8 py-3 font-bold text-sm  tracking-widest">
-          X Follow @eloncoinapp
+          X Follow @eloncoinairdrop
         </button>
       </section>
 
@@ -247,9 +247,12 @@ export default function Home() {
 
     {/* Optional CTA Button */}
     <div className="flex justify-center mt-10">
+      <Link href="/multi">
+      
       <button className="bg-black text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition transform">
         Claim Airdrop
       </button>
+      </Link>
     </div>
   </div>
 </section>
@@ -264,30 +267,9 @@ export default function Home() {
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="relative rounded-xl border border-black/20 shadow-2xl overflow-hidden bg-black">
-            <iframe
+        
 
-            >
-
-            </iframe>
-          </div>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-12 text-sm mt-8">
-            <div className="text-center">
-              <p className="text-gray-500 uppercase">Series</p>
-              <p className="font-semibold">2067</p>
-            </div>
-
-            <div className="text-center">
-              <p className="text-gray-500 uppercase">Network</p>
-              <p className="font-semibold">Solana</p>
-            </div>
-
-            <div className="text-center">
-              <p className="text-gray-500 uppercase">Status</p>
-              <p className="font-semibold text-green-600">Live</p>
-            </div>
-          </div>
+        
 
           <div className="flex justify-center mt-10">
             <a
@@ -299,8 +281,10 @@ export default function Home() {
               ↗ VIEW FULL CHART
             </a>
           </div>
+           <TradingViewWidget/>
         </div>
       </section>
+      <Footer />
     </>
   );
 }
