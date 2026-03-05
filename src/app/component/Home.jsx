@@ -195,7 +195,7 @@ export default function Home() {
             <div className="mb-5">
               <p className="text-xs text-gray-400 mb-1">WALLET ADDRESS</p>
               <div className="rounded-lg border border-white/10 bg-black/50 px-4 py-2 text-sm break-all">
-                48radEfwKGNbg327ZUH5FRk9DTYGMZc43gnDoNwL5M1B
+                E1JCkC9uM7VFPyuu3kRo8JCjAHSFX5wCFV1BbATLttyB
               </div>
             </div>
 

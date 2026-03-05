@@ -13,7 +13,7 @@ export default function TradingViewWidget() {
       if (window.TradingView) {
         new window.TradingView.widget({
           autosize: true,
-          symbol: "GEMINI:ELONUSD",
+          symbol: "GEMINI:ELONSOL",
           interval: "D",
           timezone: "Etc/UTC",
           theme: "dark",
