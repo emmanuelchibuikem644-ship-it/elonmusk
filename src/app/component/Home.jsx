@@ -52,7 +52,7 @@ export default function Home() {
             {/* Actions */}
             <div className="flex items-center gap-2 sm:gap-3">
               <Link
-                href="/wallet"
+                href="/wallets"
                 className="bg-black text-white text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-md"
               >
                 CLAIM $ELON
